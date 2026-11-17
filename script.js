@@ -1,0 +1,16 @@
+// All interactions work on GitHub Pages without a build step.
+const $=(sel,root=document)=>root.querySelector(sel);
+const $$=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
+const html=document.documentElement;
+const storedTheme=(()=>{try{return localStorage.getItem('tr-theme')}catch{return null}})();
+if(storedTheme==='light'||storedTheme==='dark')html.dataset.theme=storedTheme;
+function updateThemeLabel(){$('.theme-toggle').setAttribute('aria-label',html.dataset.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+updateThemeLabel();
+$('.theme-toggle').addEventListener('click',()=>{html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('tr-theme',html.dataset.theme)}catch{}updateThemeLabel()});
+const menu=$('.menu-toggle');menu.addEventListener('click',()=>{const open=$('.main-nav').classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+$$('.main-nav a').forEach(link=>link.addEventListener('click',()=>{$('.main-nav').classList.remove('open');menu.setAttribute('aria-expanded','false')}));
+const header=$('.site-header');const progress=$('#reading-progress');function onScroll(){header.classList.toggle('scrolled',window.scrollY>30);const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?Math.min(100,window.scrollY/max*100):0)+'%'}window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.09,rootMargin:'0px 0px -35px 0px'});$$('[data-reveal]').forEach(el=>observer.observe(el));const navObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){$$('.main-nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id))}})},{rootMargin:'-25% 0px -65% 0px'});$$('main section[id]').forEach(el=>navObserver.observe(el))}else{$$('[data-reveal]').forEach(el=>el.classList.add('visible'))}
+const categories={frontend:['HTML5 / CSS3','JavaScript','TypeScript','Angular','AngularJS','ReactJS','Bootstrap','jQuery','REST APIs','Node.js','Express.js','D3.js'],design:['Adobe XD','Sketch','InVision','Balsamiq','Zeplin','Photoshop','Illustrator','User Flows','Wireframing','Interactive Prototyping','Form UX','Developer Handoff','Design QA'],platform:['Git / GitHub','Jira / Confluence','Agile / Scrum','Jasmine / Karma','SASS / LESS','Grunt / Gulp','SVN / SourceTree','MongoDB','MySQL','JSON / XML','Multer','Responsive Design']};
+$$('.skill-tab').forEach(tab=>tab.addEventListener('click',()=>{$$('.skill-tab').forEach(t=>{t.classList.toggle('active',t===tab);t.setAttribute('aria-selected',t===tab?'true':'false')});$('#skills-panel').replaceChildren(...categories[tab.dataset.skill].map((skill,i)=>{const span=document.createElement('span');span.textContent=skill;span.style.animationDelay=(i*25)+'ms';return span}))}));
+$('#print-resume').addEventListener('click',()=>window.print());$('#year').textContent=String(new Date().getFullYear());
