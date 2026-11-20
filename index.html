@@ -11,11 +11,35 @@
   <header class="nav"><a class="brand" href="#home"><span class="brand-dot">✦</span> thirupathi<span>reddy.</span></a><nav aria-label="Main navigation"><a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a></nav><a class="nav-pill" href="mailto:hello@example.com" aria-label="Placeholder contact link">Let's talk ↗</a></header>
   <main id="home" class="hero">
     <div class="hero-copy"><div class="eyebrow"><span class="pulse"></span> INTERACTIVE DESIGN PLAYGROUND</div><h1>Say hello<br>to <em>Sprout.</em></h1><p>Meet the friendly dragon who is a little curious about you. Move your mouse and watch the magic happen.</p><div class="buttons"><a href="#about" class="btn primary">Meet the dragon <span>↗</span></a><a href="#work" class="btn secondary">Explore my work <span>↗</span></a></div><div class="footnote"><span class="tiny-mouse">↗</span> Move your cursor around to play</div></div>
+   
+<section class="dragon-section">
+  <div id="my-dragon"></div>
+</section>
+
+<style>
+.dragon-section {
+  background: #fff8b7;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+#my-dragon {
+  width: 100%;
+  height: 650px;
+}
+</style>
+
     <div class="hero-art" id="dragon-stage" aria-label="An animated, friendly green 3D dragon that looks toward the pointer" role="img"><span class="orbit orbit-1"></span><span class="orbit orbit-2"></span><div class="bubble bubble-a">HELLO! ✳</div><div class="bubble bubble-b">I'm Sprout <span>♥</span></div><div class="dragon-error" hidden>3D preview could not load. Check your internet connection and reload.</div></div>
     <div class="side-label">CURSOR TRACKING • EXPERIMENT 001</div>
   </main>
   <section class="below" id="about"><div><span class="kicker">DESIGNED TO FEEL ALIVE</span><h2>Little interactions.<br>Big personality.</h2></div><p>Sprout's eyes follow your pointer, his head gently turns, and he blinks and breathes while waiting for your next move. This is an original procedural Three.js demo — not a prerecorded animation.</p></section>
   <section class="work" id="work"><span class="kicker">YOUR PORTFOLIO</span><h2>Add your real projects here.</h2><p>Replace this demo content with links to your CareConnect case study and other UI/UX work.</p></section>
   <script type="module" src="main.js"></script>
+
+<script type="module">
+  import { mountDragon } from './dragon.js';
+  mountDragon('#my-dragon');
+</script>
+
 </body>
 </html>
